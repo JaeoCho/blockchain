@@ -1,3 +1,3 @@
 class BlockChain
-	@attr_reader :chain, :transactions
+	attr_reader :chain, :transactions
 end
