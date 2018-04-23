@@ -5,6 +5,6 @@ get '/' do
 	"block!!"
 end
 
-get '/blah_12' do
+get '/blah_12345' do
 	"you mine a block"
 end
