@@ -27,12 +27,14 @@ get '/new_wallet' do
 	b.make_a_wallet.to_s
 end
 
+
+
 get '/transaction' do
 #	if params["sender"].nil?
 #		"보내는 사람 정보가 없습니다."
 #	elsif params["receiver"]
 	"보내는 사람 : "+params["sender"] + "받는사람 : "+params["receiver"]+"거래내역 : "+params["amount"]
 	b.trans(params["sender"],params["receiver"],params["amount"])
-	"거래가 완료되었습니다."
+
 end
 #transcation?sender=a&receiver=b&amount=1.132

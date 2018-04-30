@@ -14,12 +14,23 @@ class BlockChain
 	end
 
 	def trans(s,r,a)
-		transaction = {
-			"sender"=>s,
-			"receiver"=>r,
-			"amount"=>a
-		}
-		@transaction << transaction
+		if @wallet[s].nil?
+			"업는 지갑입니다."
+		elsif @wallet[r].nil?
+			"없는 지갑입니다."
+		elsif @wallet[s].to_f < a.to_f
+			"잔액이 부족합니다."
+		else
+			transaction = {
+				"sender"=>s,
+				"receiver"=>r,
+				"amount"=>a
+			}
+			@transaction << transaction
+			@wallet[s] = @wallet[s]-a.to_f
+			@wallet[r] = @wallet[r]+a.to_f
+			"거래 완료"
+		end
 	end
 
 	def mining
@@ -46,4 +57,6 @@ class BlockChain
 	def last_block
 		@chain[-1]
 	end
+
+
 end
