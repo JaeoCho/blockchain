@@ -1,10 +1,14 @@
 require "securerandom"
+require "httparty"
+require "json"
+
 
 class BlockChain
 	def initialize
 		@chain = []
 		@transaction = []
 		@wallet = {}
+		@node = []
 	end
 
 	def make_a_wallet
@@ -58,5 +62,28 @@ class BlockChain
 		@chain[-1]
 	end
 
+	def get_other_blocks
+		@node.each do |n|
+			other_blocks = HTTParty.get("http://localhost:" + n.to_s + "/total_blocks").body
+			if @chain.size < other_blocks.to_i
+				full_blocks = HTTParty.get("http://localhost:" + n.to_s + "/get_blocks?blocks=" + @chain.to_json)
+				@chain=JSON.parse(full_blocks)
+			end
+		end
+	end
 
+	def add_node(node)
+		@node << node
+		node
+	end
+
+	def total_nodes
+		@node
+	end
+
+	def add_new_blocks(new_blocks)
+		new_blocks.each do |b|
+			@chain << b
+		end
+	end
 end
